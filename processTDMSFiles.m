@@ -39,5 +39,11 @@ function tdmsTables = processTDMSFiles(fileList, folderPath, decimateFactor)
         tdmsTables.(validFieldName).speed = speed;
         tdmsTables.(validFieldName).damageLabel = damageLabel;
         tdmsTables.(validFieldName).damageType = damageType;
+
+        if decimateFactor == 1
+            tdmsTables.(validFieldName).fs = 100000;
+        else
+            tdmsTables.(validFieldName).fs = 100000/decimateFactor;
+        end
     end
 end
