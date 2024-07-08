@@ -23,30 +23,14 @@ function tdmsTables = processTDMSFiles(fileList, folderPath, decimateFactor)
             for col = 2:width(dataTable)
                 sampledData{:, col} = decimate(dataTable{:, col}, decimateFactor);
             end
-            % % Decimate the Time column appropriately
-            % if ismember('Time', dataTable.Properties.VariableNames)
-            %     sampledData.Time = dataTable.Time(1:decimateFactor:end);
-            % else
-            %     % If there's no Time column, create a placeholder or skip
-            %     warning('No Time column found for decimation.');
-            % end
-            % % Ensure all columns are of the same length
-            % minLength = min(cellfun(@length, table2cell(sampledData)));
-            % sampledData = sampledData(1:minLength, :);
+            
         else
             sampledData = dataTable;
         end
 
-        % Remove rows where all elements are missing
-        %sampledData = sampledData(~all(ismissing(sampledData), 2), :);
-        
-        % Convert the Time column to datetime if it exists
-        % if ismember('Time', sampledData.Properties.VariableNames)
-        %     sampledData.Time = datetime(sampledData.Time, 'InputFormat', 'yyyy-MM-dd HH:mm:ss');
-        % end
-
         [~, fileName, ~] = fileparts(fullFilePath);
         
+        %creates a valid name for struct
         validFieldName = matlab.lang.makeValidName(fileName);
         
         tdmsTables.(validFieldName).data = sampledData;
