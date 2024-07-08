@@ -1,7 +1,7 @@
 function [label, torque, speed, damageLabel, damageType] = extractVariables(inputString)
     
     % Determine the label based on the presence of "GF"
-    if contains(inputString, 'GF')
+    if contains(inputString, 'GF') || contains(inputString,'Gf')
         label = 'damaged';
         damageLabel = 1;
         damageType = 'micropitting';
@@ -23,14 +23,14 @@ function [label, torque, speed, damageLabel, damageType] = extractVariables(inpu
        tokens = regexp(remainderString, numPattern, 'tokens');
 
        % Debug: Print the remainder string and tokens
-        disp('Remainder String:');
-        disp(remainderString);
+        %disp('Remainder String:');
+        %disp(remainderString);
         %disp('Tokens:');
         %disp(tokens);
         
         if length(tokens) >= 2
-            torque = str2double(tokens{1})
-            speed = str2double(tokens{2})
+            torque = str2double(tokens{1});
+            speed = str2double(tokens{2});
         else
             torque = NaN;
             speed = NaN;

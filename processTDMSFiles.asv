@@ -1,6 +1,4 @@
-function tdmsTables = processTDMSFiles(fileList, folderPath, percentageToKeep)
-    percentageToKeep = 100;
-
+function [tdmsTables] = processTDMSFiles(fileList, folderPath, label, percentageToKeep)
     %creates dictionary to store the data with the corresponding labels
     tdmsTables = struct();
     
@@ -10,22 +8,20 @@ function tdmsTables = processTDMSFiles(fileList, folderPath, percentageToKeep)
         numRowsToKeep = round(numRows * (percentageToKeep / 100));
     end
     
-    % function label = findLabel(folderPath)
-    %     if contains(folderPath, 'healthy', 'IgnoreCase', true)
-    %         label = 'healthy';
-    %     elseif contains(folderPath,'damaged', 'IgnoreCase', true)
-    %         label = 'damaged';
-    %     else
-    %         label = '';
-    %     end
-    % end
-    % 
-    % label = findLabel(folderPath);
+    function label = findLabel(folderPath)
+        if contains(folderPath, 'healthy', 'IgnoreCase', true)
+            label = 'healthy';
+        elseif contains(folderPath,'damaged', 'IgnoreCase', true)
+            label = 'damaged';
+        else
+            label = '';
+        end
+    end
+    
+    label = findLabel(folderPath);
 
     for i = 1:length(fileList)
-        [label, torque, speed, damageLabel, damageType] = extractVariables(fileList{i});
-
-        fullFilePath = fullfile(folderPath, label, fileList{i});
+        fullFilePath = fullfile(folderPath, fileList{i});
         %disp(fullFilePath)
         
         data = tdmsread(fullFilePath);
@@ -49,7 +45,7 @@ function tdmsTables = processTDMSFiles(fileList, folderPath, percentageToKeep)
         
         validFieldName = matlab.lang.makeValidName(fileName);
         
-        
+        [label, torque, speed, damageLabel, damageType] = extractVariables(fileName);
         %[date, hour, torque, velocity] = extractVariables(fileName);
 
         tdmsTables.(validFieldName).data = sampledData;
