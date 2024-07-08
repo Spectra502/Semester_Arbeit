@@ -1,3 +1,24 @@
+% function [fileList, folderPath] = selectFolderAndListFiles()
+%     msgbox('Please select a folder to list all files within it.', 'Folder Selection');
+%     uiwait(msgbox('Please select a folder to list all files within it.', 'Folder Selection'));
+%     folderPath = uigetdir('Select folder');
+% 
+%     if folderPath == 0
+%         disp('No folder selected');
+%         fileList = [];
+%         return
+%     end
+% 
+%     %files = dir(folderPath);
+%     %fileList = {files(~[files.isdir]).name};
+%     files = dir(fullfile(folderPath, '*.tdms'));
+%     fileList = {files.name};
+% 
+%     disp('Files in selected folder:');
+%     disp(fileList)
+% 
+% end
+
 function [fileStruct, folderPath] = selectFolderAndListFiles()
     %Open windows file explorer and choose folder containing the following
     %folders: healthy & damaged
@@ -23,17 +44,10 @@ function [fileStruct, folderPath] = selectFolderAndListFiles()
     damagedFolderPath = fullfile(folderPath, 'damaged');
 
     if isfolder(healthyFolderPath)
-        healthyFiles = dir(fullfile(healthyFolderPath, '*.tdms'));
-        fileStruct.healthy = {healthyFiles.name};
+        healthyFiles = dir(fullfile(healthyFolderPath), '*.tdms');
+        fileStruct.healthy = {healtyFiles.name};
     else
-        disp('No "healthy" subfolder found.')
-    end
+        disp('No "healthy" subfolde')
 
-    if isfolder(damagedFolderPath)
-        damagedFiles = dir(fullfile(damagedFolderPath, '*.tdms'));
-        fileStruct.damaged = {damagedFiles.name};
-    else
-        disp('No "damaged" subfolder found');
-    end
 
 end
