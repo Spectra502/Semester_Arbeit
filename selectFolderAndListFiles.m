@@ -1,4 +1,4 @@
-function [fileStruct, folderPath] = selectFolderAndListFiles()
+function [fileStruct, folderPathStruct] = selectFolderAndListFiles()
     %Open windows file explorer and choose folder containing the following
     %folders: healthy & damaged
     msgbox('Please select the folder containing the "healthy" and "damaged" folders', 'Folder Selection');
@@ -12,11 +12,15 @@ function [fileStruct, folderPath] = selectFolderAndListFiles()
         disp('No folder selected');
         fileStruct.healthy = [];
         fileStruct.damaged = [];
+        folderPathStruct.healthy = '';
+        folderPathStruct.damaged = struct();
         return
     end
 
     fileStruct.healthy = {};
     fileStruct.damaged = {};
+    folderPathStruct.healthy = fullfile(folderPath, 'healthy');
+    folderPathStruct.damaged = struct();
 
     %Define paths for subfolders
     healthyFolderPath = fullfile(folderPath, 'healthy');
@@ -30,8 +34,18 @@ function [fileStruct, folderPath] = selectFolderAndListFiles()
     end
 
     if isfolder(damagedFolderPath)
-        damagedFiles = dir(fullfile(damagedFolderPath, '*.tdms'));
-        fileStruct.damaged = {damagedFiles.name};
+        % damagedFiles = dir(fullfile(damagedFolderPath, '*.tdms'));
+        % fileStruct.damaged = {damagedFiles.name};
+        subfolders = dir(damagedFolderPath);
+        subfolders = subfolders([subfolders.isdir] & ~ismember({subfolders.name}, {'.', '..'}));
+
+        for k=1:length(subfolders)
+            subfolderName = subfolders(k).name;
+            subfolderPath = fullfile(damagedFolderPath, subfolderName);
+            tdmsFiles = dir(fullfile(subfolderPath, '*.tdms'));
+            fileStruct.damaged.(subfolderName) = {tdmsFiles.name}
+            folderPathStruct.damaged.(subfolderName) = subfolderPath;
+        end
     else
         disp('No "damaged" subfolder found');
     end
