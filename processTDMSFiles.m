@@ -11,7 +11,7 @@ function tdmsTables = processTDMSFiles(fileList, folderPath, decimateFactor)
         [label, torque, speed, damageLabel, damageType] = extractVariables(fileList{i});
 
         fullFilePath = fullfile(folderPath, fileList{i});
-        disp(fullFilePath);
+        %disp(fullFilePath);
         
         data = tdmsread(fullFilePath);
         dataTable = data{1};

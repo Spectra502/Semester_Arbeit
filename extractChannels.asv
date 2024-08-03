@@ -1,0 +1,15 @@
+function channelStruct = extractChannels(tdmsTable)
+    channelStruct = struct();
+    fields = fieldnames(tdmsTable);
+    %disp(length(fields))
+    for i=1:length(fields)
+        label = tdmsTable.(fields{i}).label;
+        torque = tdmsTable.(fields{i}).torque;
+        fs = tdmsTable.(fields{i}).fs;
+        speed = tdmsTable.(fields{i}).speed;
+        for k=1:length(width(tdmsTable.(fields{i}).data))
+            keyName = sprintf('ch_%i_%s_%i_Nm_%i_rpm_%i_Hz', k, label, torque, speed, fs);
+            length(tdmsTable.(field{i}).data.("De))
+        end
+    end
+end
