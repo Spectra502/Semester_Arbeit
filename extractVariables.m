@@ -1,14 +1,24 @@
 function [label, torque, speed, damageLabel, damageType] = extractVariables(inputString)
 
     % Determine the label based on the presence of "GF"
-    if contains(inputString, 'GF') || contains(inputString,'Gf')
+    if contains(inputString, 'GF_Ritzel') || contains(inputString,'Gf_Ritzel')
+        if contains(inputString, 'Rad')
+            label = 'damaged';
+            damageLabel = 2;
+            damageType = 'severe_micropitting';
+        else
+            label = 'damaged';
+            damageLabel = 1;
+            damageType = 'micropitting';
+        end
+    elseif contains(inputString, 'V')
         label = 'damaged';
-        damageLabel = 1;
-        damageType = 'micropitting';
-    elseif contains(inputString, 'SIZA')
+        damageLabel = 3;
+        damageType = 'wear_moderate'
+    elseif contains(inputString, 'leicht')
         label = 'damaged';
-        damageLabel = 2;
-        damageType = 'siza'
+        damageLabel = 4;
+        damageType = 'dimples_light'
     else
         label = 'healthy';
         damageLabel = 0;
@@ -27,10 +37,12 @@ function [label, torque, speed, damageLabel, damageType] = extractVariables(inpu
        tokens = regexp(remainderString, numPattern, 'tokens');
 
        % Debug: Print the remainder string and tokens
-        %disp('Remainder String:');
-        %disp(remainderString);
-        %disp('Tokens:');
-        %disp(tokens);
+        % disp('Remainder String:');
+        % disp(remainderString);
+        % disp('Tokens:');
+        % disp(tokens);
+        % disp(length(tokens))
+        % disp(tokens{1})
 
         if length(tokens) >= 2
             torque = str2double(tokens{1});
