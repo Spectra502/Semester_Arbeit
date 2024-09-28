@@ -42,11 +42,14 @@ function [label, torque, speed, damageLabel, damageType] = extractVariables(inpu
         % disp('Tokens:');
         % disp(tokens);
         % disp(length(tokens))
-        % disp(tokens{1})
+        % disp(tokens{3})
 
-        if length(tokens) >= 2
+        if length(tokens) == 2
             torque = str2double(tokens{1});
             speed = str2double(tokens{2});
+        elseif length(tokens) == 4
+            torque = str2double(tokens{3});
+            speed = str2double(tokens{4});
         else
             torque = NaN;
             speed = NaN;
@@ -58,3 +61,4 @@ function [label, torque, speed, damageLabel, damageType] = extractVariables(inpu
     end
 
 end
+

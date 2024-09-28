@@ -1,7 +1,7 @@
 function [features, featuresTable] = extractFeaturesTDMS(tdmsTables, timeDomain, frequencyDomain, timeFrequencyDomain, segmentLength, overlap, sampleFrequency)
     segment_length = 1000;  
     overlap = 500;
-    sampleFrequency = 1000;
+    %sampleFrequency = 1000;
     fs = sampleFrequency;
 
     fields = fieldnames(tdmsTables);

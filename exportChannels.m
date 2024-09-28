@@ -1,6 +1,7 @@
 function exportChannels(channelStruct)
-    for i = 1:length(fields)
-        key = fields{i};
+    channelFields = fieldnames(channelStruct)
+    for i = 1:length(channelFields)
+        key = channelFields{i};
         value = channelStruct.(key);
         assignin('base', key, value);
     end
